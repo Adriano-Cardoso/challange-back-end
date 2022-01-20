@@ -8,9 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.alura.challange.backend.domain.request.RevenueRequest;
+import br.com.alura.challange.backend.domain.response.RevenueResponse;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "tb_receitas")
 public class Revenue {
 
@@ -35,5 +42,20 @@ public class Revenue {
 	private BigDecimal value;
 
 	@Column(name = "data", nullable = false)
+	@JsonFormat(pattern = "dd/mm/yyyy")
 	private LocalDate date;
+	
+	@PrePersist
+	public void prePersist() {
+		this.date = LocalDate.now();
+	}
+	
+	
+	public RevenueResponse toResponse() {
+		return RevenueResponse.builder().id(this.id).description(this.description).value(this.value).build();
+	}
+	
+	public static Revenue of(RevenueRequest revenueRequest) {
+		return Revenue.builder().description(revenueRequest.getDescription()).value(revenueRequest.getValue()).build();
+	}
 }
