@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 
-@Api(value = "Receita Endpoint", description = "Endpoints da receita", tags = { "Receita Endpoint" })
+@Api(value = "Receita Endpoint", description = "Receita da despesa", tags = { "Receita Endpoint" })
 @RestController
 @AllArgsConstructor
 @RequestMapping("/receitas")
@@ -30,7 +30,7 @@ public class RevenueController {
 	@ApiOperation(value = "Cria uma nova receita")
 	@PostMapping
 	public ResponseEntity<RevenueResponse> createRevenue(@RequestBody RevenueRequest revenueRequest) {
-		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.createRevenue(revenueRequest));
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.revenueService.createRevenue(revenueRequest));
 
 	}
 
@@ -52,12 +52,13 @@ public class RevenueController {
 			@RequestBody RevenueRequest revenueRequest) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.updateRevenue(id, revenueRequest));
 	}
-	
+
 	@ApiOperation(value = "Exclusão de receita por id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<RevenueResponse> delete(@PathVariable("id") Long id) {
 		this.revenueService.delete(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
 	}
 
 }

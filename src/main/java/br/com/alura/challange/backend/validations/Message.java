@@ -7,8 +7,10 @@ import br.com.alura.challange.backend.exception.BusinessException;
 public enum Message {
 	
 	
-	DESCRIPTION_EXISTS("A descricao já existe na base ", HttpStatus.BAD_REQUEST),
-	NOT_FOUND_ID("Id não encontrado ", HttpStatus.NOT_FOUND);	
+	DESCRIPTION_EXISTS("A receita já foi criada no mês atual ", HttpStatus.BAD_REQUEST),
+	NOT_FOUND_ID("Id não encontrado ", HttpStatus.NOT_FOUND),
+	DESCRIPTION_EXISTS_EXPENSE("A despesa já foi criada no mês atual ", HttpStatus.BAD_REQUEST);
+	
 	private String value;
 	private String description;
 	private HttpStatus statusCode;

@@ -49,10 +49,19 @@ public class Expense {
 	}
 
 	public ExpenseResponse toResponse() {
-		return ExpenseResponse.builder().id(this.id).description(this.description).value(this.value).build();
+		return ExpenseResponse.builder().id(this.id).description(this.description).value(this.value).date(this.date)
+				.build();
 	}
 
 	public static Expense of(ExpenseRequest expenseRequest) {
 		return Expense.builder().description(expenseRequest.getDescription()).value(expenseRequest.getValue()).build();
+	}
+
+	public void update(ExpenseRequest expenseRequest) {
+
+		this.description = expenseRequest.getDescription();
+
+		this.value = expenseRequest.getValue();
+
 	}
 }

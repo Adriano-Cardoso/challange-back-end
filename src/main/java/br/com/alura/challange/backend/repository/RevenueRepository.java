@@ -1,6 +1,7 @@
 package br.com.alura.challange.backend.repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -22,8 +23,8 @@ public interface RevenueRepository extends JpaRepository<Revenue, Long> {
 			+ "From Revenue r "
 			+ "where r.description=:description"
 			+ " AND r.value=:value"
-			+ " AND r.date=date")
-	Optional<RevenueResponse> findByDescriptionAndValue(@Param(value = "description")String description, @Param(value = "value") BigDecimal value);
+			+ " AND r.date=:date")
+	Optional<RevenueResponse> findByDescriptionAndValue(@Param(value = "description")String description, @Param(value = "value") BigDecimal value, @Param("date") LocalDate date);
 	
 	
 	@Query("select new br.com.alura.challange.backend.domain.response.RevenueResponse(r.id,r.description,r.value, r.date) From Revenue r")
