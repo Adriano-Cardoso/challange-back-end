@@ -19,7 +19,8 @@ public class RevenueResponse {
 	private String description;
 
 	private BigDecimal value;
-
+	
 	private LocalDate date;
+
 
 }

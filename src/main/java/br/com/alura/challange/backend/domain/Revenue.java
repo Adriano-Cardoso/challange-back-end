@@ -19,23 +19,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Getter
+@Builder
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Entity
-@Builder
 @Table(name = "tb_receitas")
 public class Revenue {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "despesas_id", nullable = false)
+	@Column(name = "receita_id", nullable = false)
 	private Long id;
 	
-	@Column(name = "descrição", nullable = false)
+	@Column(name = "descricao", nullable = false)
 	private String description;
 
 	@Column(name = "valor", nullable = false)
@@ -52,10 +50,17 @@ public class Revenue {
 	
 	
 	public RevenueResponse toResponse() {
-		return RevenueResponse.builder().id(this.id).description(this.description).value(this.value).build();
+		return RevenueResponse.builder().id(this.id).description(this.description).value(this.value).date(this.date).build();
 	}
 	
 	public static Revenue of(RevenueRequest revenueRequest) {
 		return Revenue.builder().description(revenueRequest.getDescription()).value(revenueRequest.getValue()).build();
+	}
+
+
+	public void update(RevenueRequest revenueRequest) {
+		this.description = revenueRequest.getDescription();
+		this.value = revenueRequest.getValue();
+		
 	}
 }
