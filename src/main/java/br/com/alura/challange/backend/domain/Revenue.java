@@ -54,13 +54,14 @@ public class Revenue {
 	}
 	
 	public static Revenue of(RevenueRequest revenueRequest) {
-		return Revenue.builder().description(revenueRequest.getDescription()).value(revenueRequest.getValue()).build();
+		return Revenue.builder().description(revenueRequest.getDescription()).value(revenueRequest.getValue()).date(LocalDate.now()).build();
 	}
 
 
 	public void update(RevenueRequest revenueRequest) {
 		this.description = revenueRequest.getDescription();
 		this.value = revenueRequest.getValue();
+		this.date = revenueRequest.getCurrentDate();
 		
 	}
 }

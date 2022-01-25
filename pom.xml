@@ -183,6 +183,10 @@
 					<excludes>
 						<exclude>br/com/alura/challange/backend/configuration/*/**</exclude>
 						<exclude>br/com/alura/challange/backend/domain/*/**</exclude>
+						<exclude>br/com/alura/challange/backend/exception/*/**</exclude>
+						<exclude>br/com/alura/challange/backend/repository/*/**</exclude>
+						<exclude>br/com/alura/challange/backend/validations/*/**</exclude>
+						<exclude>br/com/alura/challange/backend/application/*/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

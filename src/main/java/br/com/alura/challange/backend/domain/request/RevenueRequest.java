@@ -1,11 +1,14 @@
 package br.com.alura.challange.backend.domain.request;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -30,6 +33,13 @@ public class RevenueRequest {
 	@ApiModelProperty(position = 2, value = "Valor", name = "value", dataType = "BigDecimal", example = "1045.00")
 	private BigDecimal value;
 
-	
+	@ApiModelProperty(position = 3, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
+	private LocalDate date;
+
+	@JsonIgnore
+	public LocalDate getCurrentDate() {
+		this.date = LocalDate.now();
+		return date;
+	}
 
 }

@@ -1,7 +1,5 @@
 package br.com.alura.challange.backend.service;
 
-import java.time.LocalDate;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -30,9 +28,7 @@ public class ExpenseService {
 	@Validated
 	public ExpenseResponse createExpense(@Valid ExpenseRequest expenseRequest) {
 
-		LocalDate date = LocalDate.now();
-		
-		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(), date)
+		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(), expenseRequest.getCurrentDate())
 				.ifPresent(d -> {
 					throw Message.DESCRIPTION_EXISTS_EXPENSE.asBusinessException();
 
@@ -75,9 +71,8 @@ public class ExpenseService {
 		Expense expense = this.expenseRepository.findById(id)
 				.orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
 
-		LocalDate date = LocalDate.now();
 		
-		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(), date)
+		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(), expenseRequest.getCurrentDate())
 				.ifPresent(d -> {
 					throw Message.DESCRIPTION_EXISTS_EXPENSE.asBusinessException();
 

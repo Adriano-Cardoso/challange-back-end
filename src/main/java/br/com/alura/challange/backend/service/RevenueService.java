@@ -1,7 +1,5 @@
 package br.com.alura.challange.backend.service;
 
-import java.time.LocalDate;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -30,9 +28,8 @@ public class RevenueService {
 	@Validated
 	public RevenueResponse createRevenue(@Valid RevenueRequest revenueRequest) {
 
-		LocalDate date = LocalDate.now();
 		
-		this.revenueRepository.findByDescriptionAndValue(revenueRequest.getDescription(), revenueRequest.getValue(), date).ifPresent(d -> {
+		this.revenueRepository.findByDescriptionAndValue(revenueRequest.getDescription(), revenueRequest.getValue(), revenueRequest.getCurrentDate()).ifPresent(d -> {
 			throw Message.DESCRIPTION_EXISTS.asBusinessException();
 
 		});
@@ -65,9 +62,8 @@ public class RevenueService {
 	public RevenueResponse updateRevenue(Long id, @Valid RevenueRequest revenueRequest) {
 		Revenue revenue = this.revenueRepository.findById(id).orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
 		
-		LocalDate date = LocalDate.now();
 		
-		this.revenueRepository.findByDescriptionAndValue(revenueRequest.getDescription(), revenueRequest.getValue(), date).ifPresent(d -> {
+		this.revenueRepository.findByDescriptionAndValue(revenueRequest.getDescription(), revenueRequest.getValue(), revenueRequest.getCurrentDate()).ifPresent(d -> {
 			throw Message.DESCRIPTION_EXISTS.asBusinessException();
 
 		});
