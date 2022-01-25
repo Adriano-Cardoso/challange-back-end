@@ -19,14 +19,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Getter
+@Builder
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Entity
-@Builder
 @Table(name = "tb_despesas")
 public class Expense {
 
@@ -35,7 +33,7 @@ public class Expense {
 	@Column(name = "despesas_id", nullable = false)
 	private Long id;
 
-	@Column(name = "descrição", nullable = false)
+	@Column(name = "descricao", nullable = false)
 	private String description;
 
 	@Column(name = "valor", nullable = false)
@@ -45,18 +43,25 @@ public class Expense {
 	@JsonFormat(pattern = "dd/mm/yyyy")
 	private LocalDate date;
 
-	
-	
 	@PrePersist
 	public void prePersist() {
 		this.date = LocalDate.now();
 	}
-	
+
 	public ExpenseResponse toResponse() {
-		return ExpenseResponse.builder().id(this.id).description(this.description).value(this.value).build();
+		return ExpenseResponse.builder().id(this.id).description(this.description).value(this.value).date(this.date)
+				.build();
 	}
-	
+
 	public static Expense of(ExpenseRequest expenseRequest) {
 		return Expense.builder().description(expenseRequest.getDescription()).value(expenseRequest.getValue()).build();
+	}
+
+	public void update(ExpenseRequest expenseRequest) {
+
+		this.description = expenseRequest.getDescription();
+
+		this.value = expenseRequest.getValue();
+
 	}
 }
