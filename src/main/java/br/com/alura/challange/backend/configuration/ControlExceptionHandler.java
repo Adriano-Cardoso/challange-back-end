@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import br.com.alura.challange.backend.exception.BusinessException;
 import br.com.alura.challange.backend.exception.ExceptionResolver;
-import javassist.NotFoundException;
 
 @ControllerAdvice
 public class ControlExceptionHandler {

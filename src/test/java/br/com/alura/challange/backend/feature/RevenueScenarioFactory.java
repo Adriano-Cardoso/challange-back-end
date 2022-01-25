@@ -18,8 +18,9 @@ public class RevenueScenarioFactory {
 	public static final Page<RevenueResponse> LIST_ALL = loadListAll();
 	public static final Revenue REVENUE = loadRevenue();
 	public static final RevenueResponse REVENUE_RESPONSE = loadRevenueResponse();
-	public static final RevenueRequest REVENUE_Request = loadRevenuUpdate();
+	public static final RevenueRequest REVENUE_REQUEST = loadRevenuUpdate();
 	public static final RevenueRequest CREATE = loadCreate();
+	public static final RevenueRequest CREATE_REVENUE = loadCreateRevenue();
 
 	private static Page<RevenueResponse> loadListAll() {
 
@@ -34,17 +35,23 @@ public class RevenueScenarioFactory {
 		return new PageImpl<>(list, page, 5);
 	}
 
+	private static RevenueRequest loadCreateRevenue() {
+		return RevenueRequest.builder().description("receita 01").value(BigDecimal.TEN).date(LocalDate.of(2022, 01, 25))
+				.build();
+	}
+
 	private static RevenueRequest loadCreate() {
 		return RevenueRequest.builder().description("receita 01").value(BigDecimal.TEN).date(LocalDate.now()).build();
 	}
 
 	private static RevenueRequest loadRevenuUpdate() {
-		return RevenueRequest.builder().description("Despesas teste").value(BigDecimal.TEN).date(LocalDate.now()).build();
+		return RevenueRequest.builder().description("Despesas teste").value(BigDecimal.TEN).date(LocalDate.now())
+				.build();
 	}
 
 	private static RevenueResponse loadRevenueResponse() {
-		return RevenueResponse.builder().id(1L).description("Salario").value(BigDecimal.TEN).date(LocalDate.of(2021, 10, 17))
-				.build();
+		return RevenueResponse.builder().id(1L).description("Salario").value(BigDecimal.TEN)
+				.date(LocalDate.of(2021, 10, 17)).build();
 	}
 
 	private static Revenue loadRevenue() {

@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
+
 public class RevenueRequest {
 
 	@NotEmpty(message = "O valor do campo 'description' é obrigatório no corpo da requisição")
@@ -33,6 +34,7 @@ public class RevenueRequest {
 	@ApiModelProperty(position = 2, value = "Valor", name = "value", dataType = "BigDecimal", example = "1045.00")
 	private BigDecimal value;
 
+	
 	@ApiModelProperty(position = 3, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
 	private LocalDate date;
 

@@ -98,7 +98,7 @@ public class RevenueServiceTest {
 
 		when(this.revenueRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.empty());
 
-		RevenueResponse revenueResponse = this.revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_Request);
+		RevenueResponse revenueResponse = this.revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_REQUEST);
 
 		assertNotNull(revenueResponse);
 
@@ -111,7 +111,7 @@ public class RevenueServiceTest {
 		when(this.revenueRepository.findById(anyLong())).thenReturn(Optional.empty());
 
 		assertThrows(BusinessException.class,
-				() -> revenueService.updateRevenue(10L, RevenueScenarioFactory.REVENUE_Request));
+				() -> revenueService.updateRevenue(10L, RevenueScenarioFactory.REVENUE_REQUEST));
 	}
 
 	@Test
@@ -122,7 +122,7 @@ public class RevenueServiceTest {
 
 		when(this.revenueRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
 		
-		assertThrows(BusinessException.class, () -> revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_Request));
+		assertThrows(BusinessException.class, () -> revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_REQUEST));
 	}
 	
 	@Test
@@ -142,7 +142,7 @@ public class RevenueServiceTest {
 	void createRevenue_WhenValidationDescripitionAndDateIsInValid_ExpectedException() {
 		when(this.revenueRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
 		
-		assertThrows(BusinessException.class, ()-> this.revenueService.createRevenue(RevenueScenarioFactory.REVENUE_Request));
+		assertThrows(BusinessException.class, ()-> this.revenueService.createRevenue(RevenueScenarioFactory.REVENUE_REQUEST));
 		
 	}
 
