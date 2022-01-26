@@ -96,7 +96,7 @@ public class RevenueServiceTest {
 
 		when(this.revenueRepository.findById(any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE));
 
-		when(this.revenueRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.empty());
+		when(this.revenueRepository.findByDescriptionAndValueAndDate(any(), any(), any())).thenReturn(Optional.empty());
 
 		RevenueResponse revenueResponse = this.revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_REQUEST);
 
@@ -120,7 +120,7 @@ public class RevenueServiceTest {
 		
 		when(this.revenueRepository.findById(any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE));
 
-		when(this.revenueRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
+		when(this.revenueRepository.findByDescriptionAndValueAndDate(any(), any(), any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
 		
 		assertThrows(BusinessException.class, () -> revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_REQUEST));
 	}
@@ -129,7 +129,7 @@ public class RevenueServiceTest {
 	@DisplayName("Criar receita, com validação descrição e data e válida")
 	void createRevenue_WhenValidationDescripitionAndDateIsValid_ExpectedOk() {
 		
-		when(this.revenueRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.empty());
+		when(this.revenueRepository.findByDescriptionAndValueAndDate(any(), any(), any())).thenReturn(Optional.empty());
 		
 		RevenueResponse revenueResponse = this.revenueService.createRevenue(RevenueScenarioFactory.CREATE);
 		
@@ -140,7 +140,7 @@ public class RevenueServiceTest {
 	@Test
 	@DisplayName("Criar receita, com validação descrição e data e inválido")
 	void createRevenue_WhenValidationDescripitionAndDateIsInValid_ExpectedException() {
-		when(this.revenueRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
+		when(this.revenueRepository.findByDescriptionAndValueAndDate(any(), any(), any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
 		
 		assertThrows(BusinessException.class, ()-> this.revenueService.createRevenue(RevenueScenarioFactory.REVENUE_REQUEST));
 		

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.challange.backend.domain.request.RevenueRequest;
@@ -36,8 +37,11 @@ public class RevenueController {
 
 	@ApiOperation(value = "Listagem de receitas")
 	@GetMapping
-	public ResponseEntity<Page<RevenueResponse>> listAllRevenue() {
-		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.listAllRevenue());
+	public ResponseEntity<Page<RevenueResponse>> listAllRevenue(
+	@RequestParam(required = false, defaultValue = "0", name = "page") int page,
+	@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
+	@RequestParam(required = false, name = "search") String description) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.listAllRevenue(limit, limit, description));
 	}
 
 	@ApiOperation(value = "Detalhamento de receita")

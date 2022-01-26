@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.challange.backend.domain.request.ExpenseRequest;
@@ -37,8 +38,11 @@ public class ExpenseController {
 
 	@ApiOperation(value = "Listagem de despesas")
 	@GetMapping
-	public ResponseEntity<Page<ExpenseResponse>> listAllExpense() {
-		return ResponseEntity.status(HttpStatus.OK).body(this.expenseService.listAllExpense());
+	public ResponseEntity<Page<ExpenseResponse>> listAllExpense(
+			@RequestParam(required = false, defaultValue = "0", name = "page") int page,
+			@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
+			@RequestParam(required = false, name = "search") String description) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.expenseService.listAllExpense(limit, limit, description));
 	}
 
 	@ApiOperation(value = "Detalhamento de despesas")
@@ -60,5 +64,6 @@ public class ExpenseController {
 		this.expenseService.delete(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
+	
 
 }

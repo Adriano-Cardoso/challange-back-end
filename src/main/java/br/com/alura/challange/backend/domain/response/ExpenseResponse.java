@@ -21,5 +21,7 @@ public class ExpenseResponse {
 	private BigDecimal value;
 
 	private LocalDate date;
+	
+	private Long categoryId;
 
 }

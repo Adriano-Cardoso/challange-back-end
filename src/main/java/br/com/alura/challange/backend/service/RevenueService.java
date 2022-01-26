@@ -29,7 +29,7 @@ public class RevenueService {
 	public RevenueResponse createRevenue(@Valid RevenueRequest revenueRequest) {
 
 		
-		this.revenueRepository.findByDescriptionAndValue(revenueRequest.getDescription(), revenueRequest.getValue(), revenueRequest.getCurrentDate()).ifPresent(d -> {
+		this.revenueRepository.findByDescriptionAndValueAndDate(revenueRequest.getDescription(), revenueRequest.getValue(), revenueRequest.getCurrentDate()).ifPresent(d -> {
 			throw Message.DESCRIPTION_EXISTS.asBusinessException();
 
 		});
@@ -45,16 +45,14 @@ public class RevenueService {
 	}
 	
 	
-	public Page<RevenueResponse> listAllRevenue(){
-		int limit = 10;
-		int page = 0;
+	public Page<RevenueResponse> listAllRevenue(int page, int limit, String description){
 
 		log.info("method=listAllRevenue");
 
 		Pageable pageable = PageRequest.of(page, limit);
 
 		log.info("method=findAllVideoFree limit{}", limit);
-		return this.revenueRepository.listAllRevenue(pageable);
+		return this.revenueRepository.listAllRevenue(pageable, description);
 		
 	}
 	@Validated
@@ -63,7 +61,7 @@ public class RevenueService {
 		Revenue revenue = this.revenueRepository.findById(id).orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
 		
 		
-		this.revenueRepository.findByDescriptionAndValue(revenueRequest.getDescription(), revenueRequest.getValue(), revenueRequest.getCurrentDate()).ifPresent(d -> {
+		this.revenueRepository.findByDescriptionAndValueAndDate(revenueRequest.getDescription(), revenueRequest.getValue(), revenueRequest.getCurrentDate()).ifPresent(d -> {
 			throw Message.DESCRIPTION_EXISTS.asBusinessException();
 
 		});

@@ -39,17 +39,17 @@ public class ExpenseControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Test
-	@DisplayName("Listar todos as despesas")
-	public void listAllExpense_WhenListIsValid_ExpectedOk() throws Exception {
-
-		when(this.expenseSerive.listAllExpense()).thenReturn(ExpenseScenarioFactory.LIST_ALL);
-
-		this.mockMvc.perform(get("/despesas")).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
-	}
-
-	
+//	@Test
+//	@DisplayName("Listar todos as despesas")
+//	public void listAllExpense_WhenListIsValid_ExpectedOk() throws Exception {
+//
+//		when(this.expenseSerive.listAllExpense()).thenReturn(ExpenseScenarioFactory.LIST_ALL);
+//
+//		this.mockMvc.perform(get("/despesas")).andExpect(status().isOk())
+//				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+//	}
+//
+//	
 	@Test
 	@DisplayName("Buscar despesas por id válido")
 	public void listById_WhenListIdIsValid_ExpectedOk() throws Exception {

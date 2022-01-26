@@ -28,28 +28,5 @@ public class Category {
 	@Column(name = "nome_categoria", nullable = false)
 	private String nameCategory;
 	
-//	@Column(name = "alimentacao", nullable = false)
-//	private String food;
-//	
-//	@Column(name = "saude", nullable = false)
-//	private String health;
-//	
-//	@Column(name = "moradia", nullable = false)
-//	private String home;
-//	
-//	@Column(name = "transporte", nullable = false)
-//	private String transport;
-//	
-//	@Column(name = "educacao", nullable = false)
-//	private String education;
-//	
-//	@Column(name = "lazer", nullable = false)
-//	private String leisure;
-//	
-//	@Column(name = "imprevistos", nullable = false)
-//	private String unforeseen;
-//	
-//	@Column(name = "outras", nullable = false)
-//	private String others;
 
 }

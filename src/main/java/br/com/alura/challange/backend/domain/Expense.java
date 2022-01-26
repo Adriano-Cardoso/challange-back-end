@@ -3,11 +3,15 @@ package br.com.alura.challange.backend.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -42,6 +46,13 @@ public class Expense {
 	@Column(name = "data", nullable = false)
 	@JsonFormat(pattern = "dd/mm/yyyy")
 	private LocalDate date;
+	
+	@Column(name = "categoria_id", nullable = true, insertable = false, updatable = false)
+	private Long categoryId;
+
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, optional = false)
+	@JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id")
+	private Category category;
 
 	@PrePersist
 	public void prePersist() {
@@ -49,7 +60,7 @@ public class Expense {
 	}
 
 	public ExpenseResponse toResponse() {
-		return ExpenseResponse.builder().id(this.id).description(this.description).value(this.value).date(this.date)
+		return ExpenseResponse.builder().id(this.id).description(this.description).value(this.value).date(this.date).categoryId(this.category.getId())
 				.build();
 	}
 
@@ -63,5 +74,10 @@ public class Expense {
 
 		this.value = expenseRequest.getValue();
 
+	}
+	
+	public void addCategory(Category category) {
+		this.category =  category;
+		this.categoryId = category.getId();
 	}
 }

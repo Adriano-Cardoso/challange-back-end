@@ -24,10 +24,12 @@ public interface RevenueRepository extends JpaRepository<Revenue, Long> {
 			+ "where r.description=:description"
 			+ " AND r.value=:value"
 			+ " AND r.date=:date")
-	Optional<RevenueResponse> findByDescriptionAndValue(@Param(value = "description")String description, @Param(value = "value") BigDecimal value, @Param("date") LocalDate date);
+	Optional<RevenueResponse> findByDescriptionAndValueAndDate(@Param(value = "description")String description, @Param(value = "value") BigDecimal value, @Param("date") LocalDate date);
 	
 	
-	@Query("select new br.com.alura.challange.backend.domain.response.RevenueResponse(r.id,r.description,r.value, r.date) From Revenue r")
-	Page<RevenueResponse> listAllRevenue(Pageable pageable);
+	@Query("select new br.com.alura.challange.backend.domain.response.RevenueResponse(r.id,r.description,r.value, r.date)"
+			+ " From Expense r"
+			+ " where r.description=:description")
+	Page<RevenueResponse> listAllRevenue(Pageable pageable,  @Param(value = "description")String description);
 
 }

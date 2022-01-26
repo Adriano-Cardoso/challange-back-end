@@ -36,6 +36,8 @@ public class ExpenseRequest {
 	
 	@ApiModelProperty(position = 3, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
 	private LocalDate date;
+	
+	private Long categoryId;
 
 	@JsonIgnore
 	public LocalDate getCurrentDate() {

@@ -18,7 +18,7 @@ import br.com.alura.challange.backend.domain.response.ExpenseResponse;
 public interface ExpenseRepository extends JpaRepository<Expense, Long>{
 	
 	
-	@Query("select new br.com.alura.challange.backend.domain.response.ExpenseResponse(r.id,r.description,r.value, r.date) "
+	@Query("select new br.com.alura.challange.backend.domain.response.ExpenseResponse(r.id,r.description,r.value, r.date, r.categoryId) "
 			+ "From Expense r "
 			+ "where r.description=:description"
 			+ " AND r.value=:value"
@@ -26,9 +26,11 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long>{
 	Optional<ExpenseResponse> findByDescriptionAndValue(@Param(value = "description")String description, @Param(value = "value") BigDecimal value, @Param(value = "date") LocalDate date);
 	
 	
+	@Query("select new br.com.alura.challange.backend.domain.response.ExpenseResponse(r.id,r.description,r.value, r.date, r.categoryId)"
+			+ " From Expense r"
+			+ " where r.description=:description)")
+	Page<ExpenseResponse> listAllExpense(Pageable pageable, @Param(value = "description")String description);
 
-	@Query("select new br.com.alura.challange.backend.domain.response.ExpenseResponse(r.id,r.description,r.value, r.date) From Expense r")
-	Page<ExpenseResponse> listAllExpense(Pageable pageable);
-	
+
 
 }
