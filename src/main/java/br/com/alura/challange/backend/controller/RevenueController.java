@@ -1,5 +1,7 @@
 package br.com.alura.challange.backend.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +40,10 @@ public class RevenueController {
 	@ApiOperation(value = "Listagem de receitas")
 	@GetMapping
 	public ResponseEntity<Page<RevenueResponse>> listAllRevenue(
-	@RequestParam(required = false, defaultValue = "0", name = "page") int page,
-	@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
-	@RequestParam(required = false, name = "search") String description) {
-		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.listAllRevenue(limit, limit, description));
+			@RequestParam(required = false, defaultValue = "0", name = "page") int page,
+			@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
+			@RequestParam(required = false, name = "description") String description) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.listAllRevenue(page, limit, description));
 	}
 
 	@ApiOperation(value = "Detalhamento de receita")
@@ -55,6 +57,13 @@ public class RevenueController {
 	public ResponseEntity<RevenueResponse> updateRevenue(@PathVariable("id") Long id,
 			@RequestBody RevenueRequest revenueRequest) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.updateRevenue(id, revenueRequest));
+	}
+
+	@GetMapping("{year}/{month}")
+	public ResponseEntity<List<RevenueResponse>> listByRevenueMonth(
+			@RequestParam(required = false, name = "year") Integer year,
+			@RequestParam(required = false, name = "month") Integer month) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.listByRevenueMonth(year, month));
 	}
 
 	@ApiOperation(value = "Exclusão de receita por id")
