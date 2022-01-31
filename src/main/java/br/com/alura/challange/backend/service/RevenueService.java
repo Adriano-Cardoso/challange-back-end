@@ -1,7 +1,5 @@
 package br.com.alura.challange.backend.service;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -78,11 +76,16 @@ public class RevenueService {
 
 	}
 
-	public List<RevenueResponse> listByRevenueMonth(Integer year, Integer month) {
+	public Page<RevenueResponse> listByRevenueYearAndMonth(int page, int limit, Integer year, Integer month) {
 
-		List<RevenueResponse> revenue = this.revenueRepository.findByDateAndYear(year, month);
+		log.info("method=listByRevenueMonth");
+		
+		Pageable pageable = PageRequest.of(page, limit);
+		
+		log.info("method=findByDateAndYear limit{}", limit);
+		
+		return this.revenueRepository.listByRevenueYearAndMonth(pageable, year, month);
 
-		return revenue;
 	}
 
 	public RevenueResponse findById(Long id) {

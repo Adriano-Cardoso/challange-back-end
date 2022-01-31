@@ -42,8 +42,19 @@ public class ExpenseController {
 			@RequestParam(required = false, defaultValue = "0", name = "page") int page,
 			@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
 			@RequestParam(required = false, name = "search") String description) {
-		return ResponseEntity.status(HttpStatus.OK).body(this.expenseService.listAllExpense(limit, limit, description));
+		return ResponseEntity.status(HttpStatus.OK).body(this.expenseService.listAllExpense(page, limit, description));
 	}
+	
+	@ApiOperation(value = "Listar despesas por ano e mes")
+	@GetMapping("{year}/{month}")
+	public ResponseEntity<Page<ExpenseResponse>> listByExpenseYearAndMonth(
+			@RequestParam(required = false, defaultValue = "0", name = "page") int page,
+			@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
+			@RequestParam(required = false, name = "year") Integer year,
+			@RequestParam(required = false, name = "month") Integer month) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.expenseService.listByExpenseYearAndMonth(page, limit, year, month));
+	}
+
 
 	@ApiOperation(value = "Detalhamento de despesas")
 	@GetMapping("/{id}")

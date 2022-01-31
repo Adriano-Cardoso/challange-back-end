@@ -26,10 +26,17 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long>{
 	Optional<ExpenseResponse> findByDescriptionAndValue(@Param(value = "description")String description, @Param(value = "value") BigDecimal value, @Param(value = "date") LocalDate date);
 	
 	
-	@Query("select new br.com.alura.challange.backend.domain.response.ExpenseResponse(e.id, e.description,e.value, e.date, e.categoryId)"
-			+ " From Expense e"
-			+ " where e.description=:description")
-	Page<ExpenseResponse> listAllExpense(Pageable pageable, @Param(value = "description")String description);
+	@Query("select new br.com.alura.challange.backend.domain.response.ExpenseResponse(e.id, e.description,e.value, e.date, e.categoryId) From Expense e WHERE (: description is null or e.description like %:description% )")
+	Page<ExpenseResponse> listAllExpense(Pageable pageable, @Param(value = "description") String description);
+	
+
+	
+	@Query("select new br.com.alura.challange.backend.domain.response.ExpenseResponse(e.id, e.description, e.value, e.date, e.categoryId) "
+			+ "From Expense e"
+			+ " WHERE (: year is null or YEAR(date)=:year)"
+			+ "  AND (: month is null or MONTH(date)=:month)")
+	Page<ExpenseResponse> listByExpenseYearAndMonth(Pageable pageable, @Param("year") Integer year, @Param("month") Integer month);
+	
 
 
 

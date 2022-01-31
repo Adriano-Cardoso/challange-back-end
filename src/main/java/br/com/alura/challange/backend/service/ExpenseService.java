@@ -69,6 +69,7 @@ public class ExpenseService {
 
 		return expense.toResponse();
 	}
+	
 
 	@Validated
 	@Transactional
@@ -94,6 +95,18 @@ public class ExpenseService {
 		log.info("method=delete id={}", id);
 
 		this.expenseRepository.delete(expense);
+
+	}
+	
+	public Page<ExpenseResponse> listByExpenseYearAndMonth(int page, int limit, Integer year, Integer month) {
+
+		log.info("method=listByRevenueMonth");
+		
+		Pageable pageable = PageRequest.of(page, limit);
+		
+		log.info("method=findByDateAndYear limit{}", limit);
+		
+		return this.expenseRepository.listByExpenseYearAndMonth(pageable, year, month);
 
 	}
 
