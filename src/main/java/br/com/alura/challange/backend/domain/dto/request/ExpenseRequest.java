@@ -1,4 +1,4 @@
-package br.com.alura.challange.backend.domain.request;
+package br.com.alura.challange.backend.domain.dto.request;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ public class ExpenseRequest {
 	
 	@NotEmpty(message = "O valor do campo 'description' é obrigatório no corpo da requisição")
 	@NotNull(message = "O valor do campo 'description' é obrigatório no corpo da requisição")
-	@ApiModelProperty(position = 1, value = "Description", name = "description", dataType = "String", example = "PPR")
+	@ApiModelProperty(position = 1, value = "Description", name = "description", dataType = "String", example = "Compras Mes")
 	private String description;
 
 	@NotNull(message = "O valor do campo 'Value' está inválido no corpo da requisição")
@@ -35,9 +35,10 @@ public class ExpenseRequest {
 	@ApiModelProperty(position = 2, value = "Valor", name = "value", dataType = "BigDecimal", example = "1045.00")
 	private BigDecimal value;
 	
-	@ApiModelProperty(position = 3, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
+	@ApiModelProperty(position = 3, required = false, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
 	private LocalDate date;
 	
+	@ApiModelProperty(position = 3, value = "categoryEnum", name = "categoryEnum", dataType = "CategoryEnum", example = "ALIMENTACAO")
 	private CategoryEnum categoryEnum;
 
 	@JsonIgnore

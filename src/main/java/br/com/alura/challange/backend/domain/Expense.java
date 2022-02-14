@@ -15,9 +15,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.alura.challange.backend.domain.dto.request.ExpenseRequest;
 import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.domain.enums.CategoryEnum;
-import br.com.alura.challange.backend.domain.request.ExpenseRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,11 +45,10 @@ public class Expense {
 	@Column(name = "data", nullable = false)
 	@JsonFormat(pattern = "dd/mm/yyyy")
 	private LocalDate date;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "Categoria", nullable = false)
 	private CategoryEnum categoryEnum;
-	
 
 	@PrePersist
 	public void prePersist() {
@@ -57,25 +56,26 @@ public class Expense {
 	}
 
 	public ExpenseResponse toResponse() {
-		return ExpenseResponse.builder().id(this.id).description(this.description).value(this.value).date(this.date).categoryEnum(this.categoryEnum)
-				.build();
+		return ExpenseResponse.builder().id(this.id).description(this.description).value(this.value).date(this.date)
+				.categoryEnum(this.categoryEnum).build();
 	}
 
 	public static Expense of(ExpenseRequest expenseRequest) {
-		return Expense.builder().description(expenseRequest.getDescription()).value(expenseRequest.getValue()).categoryEnum(expenseRequest.getCategoryEnum()).build();
+		return Expense.builder().description(expenseRequest.getDescription()).value(expenseRequest.getValue())
+				.categoryEnum(expenseRequest.getCategoryEnum()).build();
 	}
 
 	public void update(ExpenseRequest expenseRequest) {
 
 		this.description = expenseRequest.getDescription();
-
 		this.value = expenseRequest.getValue();
+		this.date = expenseRequest.getDate();
+		this.categoryEnum = expenseRequest.getCategoryEnum();
 
 	}
-	
-	
-	public void addCategory (CategoryEnum categoryEnum) {
+
+	public void addCategory(CategoryEnum categoryEnum) {
 		this.categoryEnum = categoryEnum;
 	}
-	
+
 }

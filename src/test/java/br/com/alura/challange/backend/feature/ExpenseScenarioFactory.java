@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.com.alura.challange.backend.domain.Expense;
+import br.com.alura.challange.backend.domain.dto.request.ExpenseRequest;
 import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
-import br.com.alura.challange.backend.domain.request.ExpenseRequest;
 
 public class ExpenseScenarioFactory {
 
