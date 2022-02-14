@@ -16,7 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.alura.challange.backend.domain.response.ExpenseResponse;
+import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.exception.BusinessException;
 import br.com.alura.challange.backend.feature.ExpenseScenarioFactory;
 import br.com.alura.challange.backend.repository.ExpenseRepository;

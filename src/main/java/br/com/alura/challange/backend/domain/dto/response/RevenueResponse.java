@@ -1,4 +1,4 @@
-package br.com.alura.challange.backend.domain.response;
+package br.com.alura.challange.backend.domain.dto.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,16 +12,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
-public class ExpenseResponse {
+public class RevenueResponse {
 	
 	private Long id;
 	
 	private String description;
 
 	private BigDecimal value;
-
-	private LocalDate date;
 	
-	private Long categoryId;
+	private LocalDate date;
+
 
 }

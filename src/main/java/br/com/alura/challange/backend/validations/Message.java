@@ -10,9 +10,9 @@ public enum Message {
 	DESCRIPTION_EXISTS("A receita já foi criada no mês atual ", HttpStatus.BAD_REQUEST),
 	NOT_FOUND_ID("Id não encontrado ", HttpStatus.NOT_FOUND),
 	DESCRIPTION_EXISTS_EXPENSE("A despesa já foi criada no mês atual ", HttpStatus.BAD_REQUEST),
-	CATEGORY_ID_NOT_FOUND("O Id da categoria não foi encontrado! ", HttpStatus.NOT_FOUND), 
 	NOT_FOUND_DESCRIPTION("A Descrição da despesa não existe na base ", HttpStatus.NOT_FOUND), 
-	NOT_FOUND_MONTH_OR_YEAR("O mês ou o ano não existe na base ", HttpStatus.NOT_FOUND);
+	NOT_FOUND_MONTH_OR_YEAR("O mês ou o ano não existe na base ", HttpStatus.NOT_FOUND),
+	CATEGORY_NOT_FOUND("A categoria não foi encontrada! ", HttpStatus.NOT_FOUND);
 	
 	private String value;
 	private String description;

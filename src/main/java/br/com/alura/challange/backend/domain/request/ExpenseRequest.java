@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.alura.challange.backend.domain.enums.CategoryEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +38,7 @@ public class ExpenseRequest {
 	@ApiModelProperty(position = 3, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
 	private LocalDate date;
 	
-	private Long categoryId;
+	private CategoryEnum categoryEnum;
 
 	@JsonIgnore
 	public LocalDate getCurrentDate() {

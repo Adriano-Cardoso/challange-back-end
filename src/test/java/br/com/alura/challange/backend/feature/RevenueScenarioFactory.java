@@ -10,8 +10,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import br.com.alura.challange.backend.domain.Revenue;
+import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
 import br.com.alura.challange.backend.domain.request.RevenueRequest;
-import br.com.alura.challange.backend.domain.response.RevenueResponse;
 
 public class RevenueScenarioFactory {
 

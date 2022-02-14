@@ -1,4 +1,4 @@
-package br.com.alura.challange.backend.domain.request;
+package br.com.alura.challange.backend.domain.dto.request;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -9,10 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import br.com.alura.challange.backend.domain.Category;
 import br.com.alura.challange.backend.domain.Expense;
+import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.domain.request.ExpenseRequest;
-import br.com.alura.challange.backend.domain.response.ExpenseResponse;
 import br.com.alura.challange.backend.repository.ExpenseRepository;
 import br.com.alura.challange.backend.validations.Message;
 import lombok.AllArgsConstructor;
@@ -26,12 +25,13 @@ public class ExpenseService {
 
 	private ExpenseRepository expenseRepository;
 
-	private CategoryService categoryService;
 
 	@Validated
 	public ExpenseResponse createExpense(@Valid ExpenseRequest expenseRequest) {
 
-		Category category = this.categoryService.findById(expenseRequest.getCategoryId());
+//		this.expenseRepository.findByCategoryEnum(expenseRequest.getCategoryEnum()).ifPresent(e -> {
+//			throw Message.CATEGORY_NOT_FOUND.asBusinessException();
+//		});
 
 		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(),
 				expenseRequest.getCurrentDate()).ifPresent(d -> {
@@ -41,7 +41,6 @@ public class ExpenseService {
 
 		Expense expense = Expense.of(expenseRequest);
 
-		expense.addCategory(category);
 
 		this.expenseRepository.save(expense);
 

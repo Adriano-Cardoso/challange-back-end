@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import br.com.alura.challange.backend.domain.Revenue;
-import br.com.alura.challange.backend.domain.request.RevenueRequest;
-import br.com.alura.challange.backend.domain.response.RevenueResponse;
+import br.com.alura.challange.backend.domain.dto.request.RevenueRequest;
+import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
 import br.com.alura.challange.backend.repository.RevenueRepository;
 import br.com.alura.challange.backend.validations.Message;
 import lombok.AllArgsConstructor;
@@ -28,7 +28,7 @@ public class RevenueService {
 	@Validated
 	public RevenueResponse createRevenue(@Valid RevenueRequest revenueRequest) {
 
-		this.revenueRepository.findByDescriptionAndValueAndDate(revenueRequest.getDescription(),
+		this.revenueRepository.findByValueAndDate(revenueRequest.getDescription(),
 				revenueRequest.getValue(), revenueRequest.getDate()).ifPresent(d -> {
 					throw Message.DESCRIPTION_EXISTS.asBusinessException();
 
@@ -61,7 +61,7 @@ public class RevenueService {
 		Revenue revenue = this.revenueRepository.findById(id)
 				.orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
 
-		this.revenueRepository.findByDescriptionAndValueAndDate(revenueRequest.getDescription(),
+		this.revenueRepository.findByValueAndDate(revenueRequest.getDescription(),
 				revenueRequest.getValue(), revenueRequest.getDate()).ifPresent(d -> {
 					throw Message.DESCRIPTION_EXISTS.asBusinessException();
 

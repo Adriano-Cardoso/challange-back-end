@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.alura.challange.backend.domain.request.RevenueRequest;
-import br.com.alura.challange.backend.domain.response.RevenueResponse;
+import br.com.alura.challange.backend.domain.dto.request.RevenueRequest;
+import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
 import br.com.alura.challange.backend.service.RevenueService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
