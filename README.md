@@ -13,7 +13,11 @@ Trello da Sprint 3
 #Tecnologias
 
 -Java 11
+
 -Spring boot
+
 -Spring Security
+
 -h2-console
+
 -heroku
