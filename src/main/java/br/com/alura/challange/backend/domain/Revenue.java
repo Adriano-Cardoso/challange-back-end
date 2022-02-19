@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.alura.challange.backend.domain.dto.request.RevenueRequest;
+import br.com.alura.challange.backend.domain.dto.request.RevenueUpdateRequest;
 import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -61,10 +62,10 @@ public class Revenue {
 	}
 
 
-	public void update(RevenueRequest revenueRequest) {
-		this.description = revenueRequest.getDescription();
-		this.value = revenueRequest.getValue();
-		this.date = revenueRequest.getCurrentDate();
+	public void update(RevenueUpdateRequest revenueUpdateRequest) {
+		this.description = revenueUpdateRequest.getDescription();
+		this.value = revenueUpdateRequest.getValue();
+		this.date = revenueUpdateRequest.getDate();
 		
 	}
 }

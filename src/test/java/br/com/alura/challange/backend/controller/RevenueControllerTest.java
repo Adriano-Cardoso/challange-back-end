@@ -44,7 +44,7 @@ public class RevenueControllerTest {
 	@DisplayName("Listar todos os receitas")
 	public void listAllRevenue_WhenListIsValid_ExpectedOk() throws Exception {
 
-		when(this.revenueService.listAllRevenue(anyInt(), anyInt(), any())).thenReturn(RevenueScenarioFactory.LIST_ALL);
+		when(this.revenueService.listAllRevenue(anyInt(), anyInt(), any())).thenReturn(RevenueScenarioFactory.PAGE_REVENUE);
 
 		this.mockMvc.perform(get("/receitas")).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -57,7 +57,7 @@ public class RevenueControllerTest {
 		when(this.revenueService.listByRevenueYearAndMonth(anyInt(), anyInt(), anyInt(), anyInt()))
 				.thenReturn(RevenueScenarioFactory.PAGE_REVENUE);
 
-		this.mockMvc.perform(get("/receitas/2/2022")).andExpect(status().isOk())
+		this.mockMvc.perform(get("/receitas/year/2022/month/2")).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	}
 
@@ -89,7 +89,7 @@ public class RevenueControllerTest {
 
 		when(this.revenueService.updateRevenue(anyLong(), any())).thenReturn(RevenueScenarioFactory.REVENUE_RESPONSE);
 
-		this.mockMvc.perform(put("/receitas/1").content(asJsonString(RevenueScenarioFactory.REVENUE_REQUEST))
+		this.mockMvc.perform(put("/receitas/1").content(asJsonString(RevenueScenarioFactory.REVENUE_UPDATE_REQUEST))
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 
@@ -99,7 +99,7 @@ public class RevenueControllerTest {
 
 		when(this.revenueService.updateRevenue(anyLong(), any())).thenReturn(RevenueScenarioFactory.REVENUE_RESPONSE);
 
-		this.mockMvc.perform(put("/receitas/1").content(asJsonString(RevenueScenarioFactory.REVENUE_REQUEST))
+		this.mockMvc.perform(put("/receitas/17").content(asJsonString(RevenueScenarioFactory.REVENUE_UPDATE_REQUEST))
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 

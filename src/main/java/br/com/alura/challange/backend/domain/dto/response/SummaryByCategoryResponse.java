@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SumaryByCategoryResponse {
+public class SummaryByCategoryResponse {
 
 	@ApiModelProperty(position = 1, value = "category", name = "categoria da despesa", dataType = "String", example = "ALIMENTACAO")
 	private CategoryEnum categoryEnum;

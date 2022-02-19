@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 
 import br.com.alura.challange.backend.domain.Expense;
 import br.com.alura.challange.backend.domain.dto.request.ExpenseRequest;
+import br.com.alura.challange.backend.domain.dto.request.ExpenseUpdateRequest;
 import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.repository.ExpenseRepository;
 import br.com.alura.challange.backend.validations.Message;
@@ -25,22 +26,16 @@ public class ExpenseService {
 
 	private ExpenseRepository expenseRepository;
 
-
 	@Validated
 	public ExpenseResponse createExpense(@Valid ExpenseRequest expenseRequest) {
 
-//		this.expenseRepository.findByCategoryEnum(expenseRequest.getCategoryEnum()).ifPresent(e -> {
-//			throw Message.CATEGORY_NOT_FOUND.asBusinessException();
-//		});
-
 		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(),
 				expenseRequest.getCurrentDate()).ifPresent(d -> {
-					throw Message.DESCRIPTION_EXISTS_EXPENSE.asBusinessException();
+					throw Message.EXISTS_EXPENSE.asBusinessException();
 
 				});
 
 		Expense expense = Expense.of(expenseRequest);
-
 
 		this.expenseRepository.save(expense);
 
@@ -68,21 +63,20 @@ public class ExpenseService {
 
 		return expense.toResponse();
 	}
-	
 
 	@Validated
 	@Transactional
-	public ExpenseResponse update(Long id, @Valid ExpenseRequest expenseRequest) {
+	public ExpenseResponse update(Long id, @Valid ExpenseUpdateRequest expenseUpdateRequest) {
 		Expense expense = this.expenseRepository.findById(id)
 				.orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
 
-		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(),
-				expenseRequest.getCurrentDate()).ifPresent(d -> {
-					throw Message.DESCRIPTION_EXISTS_EXPENSE.asBusinessException();
+		this.expenseRepository.findByDescriptionAndValue(expenseUpdateRequest.getDescription(),
+				expenseUpdateRequest.getValue(), expenseUpdateRequest.getDate()).ifPresent(d -> {
+					throw Message.EXISTS_EXPENSE.asBusinessException();
 
 				});
 
-		expense.update(expenseRequest);
+		expense.update(expenseUpdateRequest);
 
 		return expense.toResponse();
 	}
@@ -96,18 +90,17 @@ public class ExpenseService {
 		this.expenseRepository.delete(expense);
 
 	}
-	
+
 	public Page<ExpenseResponse> listByExpenseYearAndMonth(int page, int limit, Integer year, Integer month) {
 
 		log.info("method=listByRevenueMonth");
-		
+
 		Pageable pageable = PageRequest.of(page, limit);
-		
+
 		log.info("method=findByDateAndYear limit{}", limit);
-		
+
 		return this.expenseRepository.listByExpenseYearAndMonth(pageable, year, month);
 
 	}
-
 
 }

@@ -8,7 +8,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
@@ -22,8 +21,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
-public class RevenueRequest {
-
+public class RevenueUpdateRequest {
+	
 	@NotEmpty(message = "O valor do campo 'description' é obrigatório no corpo da requisição")
 	@NotNull(message = "O valor do campo 'description' é obrigatório no corpo da requisição")
 	@ApiModelProperty(position = 1, value = "Description", name = "description", dataType = "String", example = "Salario mensal")
@@ -37,13 +36,6 @@ public class RevenueRequest {
 
 	@ApiModelProperty(position = 3, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
 	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonIgnore
 	private LocalDate date;
-
-	@JsonIgnore
-	public LocalDate getCurrentDate() {
-		this.date = LocalDate.now();
-		return date;
-	}
 
 }

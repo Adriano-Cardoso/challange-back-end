@@ -39,17 +39,30 @@ public class RevenueServiceTest {
 	void listAllRevenue_WhenListValid_ExpectedOk() {
 
 		when(this.revenueRepository.listAllRevenue(anyString(), any(Pageable.class)))
-				.thenReturn(RevenueScenarioFactory.LIST_ALL);
+				.thenReturn(RevenueScenarioFactory.PAGE_REVENUE);
 
 		Page<RevenueResponse> listAllRevenue = this.revenueService.listAllRevenue(0, 10, "te");
 
 		assertNotNull(listAllRevenue);
 
-		assertEquals(RevenueScenarioFactory.LIST_ALL, listAllRevenue);
+		assertEquals(RevenueScenarioFactory.PAGE_REVENUE, listAllRevenue);
 
 		verify(revenueRepository).listAllRevenue(any(), any());
 	}
 
+	@Test
+	@DisplayName("Listar receita por mes e ano")
+	void listByRevenueYearAndMonth_WhenIsValid_ExpectedOk() {
+		
+		when(this.revenueRepository.listByRevenueYearAndMonth(any(), any(), any())).thenReturn(RevenueScenarioFactory.PAGE_REVENUE);
+		
+		Page<RevenueResponse> listByYearAndMonth = this.revenueService.listByRevenueYearAndMonth(0, 10, 2022, 02);
+		
+		assertNotNull(listByYearAndMonth);
+		
+		verify(revenueRepository).listByRevenueYearAndMonth(any(), any(), any());
+	}
+	
 	@Test
 	@DisplayName("Listar id que existe na base")
 	void listByIdRevenue_WhenIsvalid_ExpectedOk() {
@@ -100,7 +113,7 @@ public class RevenueServiceTest {
 
 		when(this.revenueRepository.findByValueAndDate(any(), any(), any())).thenReturn(Optional.empty());
 
-		RevenueResponse revenueResponse = this.revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_REQUEST);
+		RevenueResponse revenueResponse = this.revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_UPDATE_REQUEST);
 
 		assertNotNull(revenueResponse);
 
@@ -113,7 +126,7 @@ public class RevenueServiceTest {
 		when(this.revenueRepository.findById(anyLong())).thenReturn(Optional.empty());
 
 		assertThrows(BusinessException.class,
-				() -> revenueService.updateRevenue(10L, RevenueScenarioFactory.REVENUE_REQUEST));
+				() -> revenueService.updateRevenue(10L, RevenueScenarioFactory.REVENUE_UPDATE_REQUEST));
 	}
 
 	@Test
@@ -126,7 +139,7 @@ public class RevenueServiceTest {
 				.thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
 
 		assertThrows(BusinessException.class,
-				() -> revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_REQUEST));
+				() -> revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_UPDATE_REQUEST));
 	}
 
 	@Test
@@ -148,7 +161,7 @@ public class RevenueServiceTest {
 				.thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
 
 		assertThrows(BusinessException.class,
-				() -> this.revenueService.createRevenue(RevenueScenarioFactory.REVENUE_REQUEST));
+				() -> this.revenueService.createRevenue(RevenueScenarioFactory.CREATE));
 
 	}
 

@@ -1,9 +1,11 @@
 package br.com.alura.challange.backend.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.exception.BusinessException;
@@ -30,20 +34,6 @@ public class ExpenseServiceTest {
 	@Mock
 	private ExpenseRepository expenseRepository;
 
-//	@Test
-//	@DisplayName("Listar todas as despesas")
-//	void listAllExpense_WhenListValid_ExpectedOk() {
-//
-//		when(this.expenseRepository.listAllExpense(any(Pageable.class))).thenReturn(ExpenseScenarioFactory.LIST_ALL);
-//
-//		Page<ExpenseResponse> listAllExpense = this.expenseService.listAllExpense();
-//
-//		assertNotNull(listAllExpense);
-//
-//		assertEquals(ExpenseScenarioFactory.LIST_ALL, listAllExpense);
-//
-//		verify(expenseRepository).listAllExpense(any());
-//	}
 
 	@Test
 	@DisplayName("Listar id que existe na base")
@@ -55,6 +45,35 @@ public class ExpenseServiceTest {
 
 		verify(expenseRepository).findById(any());
 
+	}
+	
+	@Test
+	@DisplayName("Listar receita por mes e ano")
+	void istByExpenseYearAndMonth_WhenIsValid_ExpectedOk() {
+		
+		when(this.expenseRepository.listByExpenseYearAndMonth(any(), any(),any())).thenReturn(ExpenseScenarioFactory.PAGE_RESPONSE);
+		
+		Page<ExpenseResponse> pageExpenseYerAndMonth = this.expenseService.listByExpenseYearAndMonth(0, 10, 2022, 02);
+		
+		assertNotNull(pageExpenseYerAndMonth);
+		
+		verify(expenseRepository).listByExpenseYearAndMonth(any(), any(), any());
+	}
+	
+	@Test
+	@DisplayName("Listar todas as desepesas")
+	void listAllRevenue_WhenListValid_ExpectedOk() {
+
+		when(this.expenseRepository.listAllExpense(any(Pageable.class), anyString()))
+				.thenReturn(ExpenseScenarioFactory.PAGE_RESPONSE);
+
+		Page<ExpenseResponse> expense = this.expenseService.listAllExpense(0, 10, "te");
+
+		assertNotNull(expense);
+
+		assertEquals(ExpenseScenarioFactory.PAGE_RESPONSE, expense);
+
+		verify(expenseRepository).listAllExpense(any(), any());
 	}
 
 	@Test
@@ -95,7 +114,7 @@ public class ExpenseServiceTest {
 
 		when(this.expenseRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.empty());
 
-		ExpenseResponse expenseResponse = this.expenseService.update(1L, ExpenseScenarioFactory.EXPENSE_REQUEST);
+		ExpenseResponse expenseResponse = this.expenseService.update(1L, ExpenseScenarioFactory.EXPENSE_UPDATE_REQUEST);
 
 		assertNotNull(expenseResponse);
 
@@ -108,7 +127,7 @@ public class ExpenseServiceTest {
 		when(this.expenseRepository.findById(anyLong())).thenReturn(Optional.empty());
 
 		assertThrows(BusinessException.class,
-				() -> expenseService.update(10L, ExpenseScenarioFactory.EXPENSE_REQUEST));
+				() -> expenseService.update(10L, ExpenseScenarioFactory.EXPENSE_UPDATE_REQUEST));
 	}
 
 	@Test
@@ -119,7 +138,7 @@ public class ExpenseServiceTest {
 
 		when(this.expenseRepository.findByDescriptionAndValue(any(), any(), any())).thenReturn(Optional.of(ExpenseScenarioFactory.EXPENSE_RESPONSE));
 		
-		assertThrows(BusinessException.class, () -> expenseService.update(1L, ExpenseScenarioFactory.EXPENSE_REQUEST));
+		assertThrows(BusinessException.class, () -> expenseService.update(1L, ExpenseScenarioFactory.EXPENSE_UPDATE_REQUEST));
 	}
 	
 	@Test
