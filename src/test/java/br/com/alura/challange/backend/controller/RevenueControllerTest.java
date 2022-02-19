@@ -57,7 +57,7 @@ public class RevenueControllerTest {
 		when(this.revenueService.listByRevenueYearAndMonth(anyInt(), anyInt(), anyInt(), anyInt()))
 				.thenReturn(RevenueScenarioFactory.PAGE_REVENUE);
 
-		this.mockMvc.perform(get("/receitas/2/2022")).andExpect(status().isOk())
+		this.mockMvc.perform(get("/receitas/year/2022/month/2")).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	}
 

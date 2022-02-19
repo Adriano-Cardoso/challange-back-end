@@ -60,7 +60,7 @@ public class RevenueController {
 	}
 
 	@ApiOperation(value = "Listar receitas por ano e mes")
-	@GetMapping("/{year}/{month}")
+	@GetMapping("/year/{year}/month/{month}")
 	public ResponseEntity<Page<RevenueResponse>> listByRevenueMonth(
 			@RequestParam(required = false, defaultValue = "0", name = "page") int page,
 			@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,

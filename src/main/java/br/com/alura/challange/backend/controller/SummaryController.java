@@ -22,7 +22,7 @@ public class SummaryController {
 	
 	private SummariesService summariesService;
 	
-	@GetMapping("/{year}/{month}")
+	@GetMapping("year/{year}/month/{month}")
 	public ResponseEntity<SummaryResponse> summaryMonth(
 			@ApiParam(required = false, name = "year") @PathVariable("year") Integer year,
 			@ApiParam(required = false, name = "month")@PathVariable("month") Integer month){
