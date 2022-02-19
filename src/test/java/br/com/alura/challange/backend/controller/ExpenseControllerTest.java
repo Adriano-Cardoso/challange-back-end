@@ -95,7 +95,7 @@ public class ExpenseControllerTest {
 	@DisplayName("Deleta receita por id")
 	public void delete_WhenRevenueIdIsInvalid_ExpectedOk() throws Exception {
 
-		doNothing().when(expenseSerive).delete(4L);
+		doNothing().when(expenseSerive).delete(1L);
 
 		mockMvc.perform(delete("/receitas/1").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());

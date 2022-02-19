@@ -25,6 +25,6 @@ public class SummaryResponse {
 	private BigDecimal finalBalance;
 	
 	@ApiModelProperty(position = 4, value = "SumaryByCategoryResponse", name = "Gastos por categorias", dataType = "list", example = "")
-	private List<SumaryByCategoryResponse> spendingByCategories;
+	private List<SummaryByCategoryResponse> spendingByCategories;
 
 }

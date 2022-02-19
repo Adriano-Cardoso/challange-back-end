@@ -186,7 +186,8 @@
 						<exclude>br/com/alura/challange/backend/exception/*/**</exclude>
 						<exclude>br/com/alura/challange/backend/repository/*/**</exclude>
 						<exclude>br/com/alura/challange/backend/validations/*/**</exclude>
-						<exclude>br/com/alura/challange/backend/application/*/**</exclude>
+						<exclude>br/com/alura/challange/backend/service/LoginService.*</exclude>
+						<exclude>br/com/alura/challange/backend/application/Application.*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

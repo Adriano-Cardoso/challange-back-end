@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.alura.challange.backend.domain.Expense;
 import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
-import br.com.alura.challange.backend.domain.dto.response.SumaryByCategoryResponse;
+import br.com.alura.challange.backend.domain.dto.response.SummaryByCategoryResponse;
 import br.com.alura.challange.backend.domain.enums.CategoryEnum;
 
 @Repository
@@ -37,7 +37,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 	@Query("select sum(d.value) from Expense d where YEAR(d.date) =:year and MONTH(d.date) =:month")
 	Optional<BigDecimal> sumMoth(@Param("year") Integer year, @Param("month") Integer month);
 
-	@Query("select new br.com.alura.challange.backend.domain.dto.response.SumaryByCategoryResponse(e.categoryEnum, sum(e.value))  From Expense e WHERE (: year is null or YEAR(date)=:year) AND (: month is null or MONTH(date)=:month)  group by e.categoryEnum")
-	List<SumaryByCategoryResponse> expensesByCategoryAtTheEndOfTheMonth(@Param("year") Integer year, @Param("month") Integer month);
+	@Query("select new br.com.alura.challange.backend.domain.dto.response.SummaryByCategoryResponse(e.categoryEnum, sum(e.value))  From Expense e WHERE (: year is null or YEAR(date)=:year) AND (: month is null or MONTH(date)=:month)  group by e.categoryEnum")
+	List<SummaryByCategoryResponse> expensesByCategoryAtTheEndOfTheMonth(@Param("year") Integer year, @Param("month") Integer month);
 
 }
