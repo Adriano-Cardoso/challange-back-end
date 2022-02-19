@@ -1,4 +1,4 @@
-#SOBRE O DESAFIO PROPOSto
+#SOBRE O DESAFIO PROPOSTO
 
 Construir uma API Rest para controle financeiro familiar, onde cadastraremos receitas, despesas, implementaremos consultas, controle de acesso, dentre outras funcionalidades.
 
