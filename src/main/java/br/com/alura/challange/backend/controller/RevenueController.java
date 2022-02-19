@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.challange.backend.domain.dto.request.RevenueRequest;
+import br.com.alura.challange.backend.domain.dto.request.RevenueUpdateRequest;
 import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
 import br.com.alura.challange.backend.service.RevenueService;
 import io.swagger.annotations.Api;
@@ -54,8 +55,8 @@ public class RevenueController {
 	@ApiOperation(value = "Atualização de receita por id")
 	@PutMapping("/{id}")
 	public ResponseEntity<RevenueResponse> updateRevenue(@PathVariable("id") Long id,
-			@RequestBody RevenueRequest revenueRequest) {
-		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.updateRevenue(id, revenueRequest));
+			@RequestBody RevenueUpdateRequest revenueUpdateRequest) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.updateRevenue(id, revenueUpdateRequest));
 	}
 
 	@ApiOperation(value = "Listar receitas por ano e mes")

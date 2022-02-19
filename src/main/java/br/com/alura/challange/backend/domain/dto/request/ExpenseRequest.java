@@ -37,13 +37,13 @@ public class ExpenseRequest {
 	@ApiModelProperty(position = 2, value = "Valor", name = "value", dataType = "BigDecimal", example = "1045.00")
 	private BigDecimal value;
 	
-	@ApiModelProperty(position = 3, required = false, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonIgnore
-	private LocalDate date;
 	
 	@ApiModelProperty(position = 3, value = "categoryEnum", name = "categoryEnum", dataType = "CategoryEnum", example = "ALIMENTACAO")
 	private CategoryEnum categoryEnum;
+
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonIgnore
+	private LocalDate date;
 
 	@JsonIgnore
 	public LocalDate getCurrentDate() {

@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.alura.challange.backend.domain.dto.request.ExpenseRequest;
+import br.com.alura.challange.backend.domain.dto.request.ExpenseUpdateRequest;
 import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.domain.enums.CategoryEnum;
 import lombok.AllArgsConstructor;
@@ -65,12 +66,12 @@ public class Expense {
 				.categoryEnum(expenseRequest.getCategoryEnum()).build();
 	}
 
-	public void update(ExpenseRequest expenseRequest) {
+	public void update(ExpenseUpdateRequest expenseUpdateRequest) {
 
-		this.description = expenseRequest.getDescription();
-		this.value = expenseRequest.getValue();
-		this.date = expenseRequest.getDate();
-		this.categoryEnum = expenseRequest.getCategoryEnum();
+		this.description = expenseUpdateRequest.getDescription();
+		this.value = expenseUpdateRequest.getValue();
+		this.date = expenseUpdateRequest.getDate();
+		this.categoryEnum = expenseUpdateRequest.getCategoryEnum();
 
 	}
 

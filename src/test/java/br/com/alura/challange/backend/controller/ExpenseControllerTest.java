@@ -67,17 +67,17 @@ public class ExpenseControllerTest {
 
 		when(this.expenseSerive.update(anyLong(), any())).thenReturn(ExpenseScenarioFactory.EXPENSE_RESPONSE);
 
-		this.mockMvc.perform(put("/despesas/1").content(asJsonString(ExpenseScenarioFactory.EXPENSE_REQUEST))
+		this.mockMvc.perform(put("/despesas/1").content(asJsonString(ExpenseScenarioFactory.EXPENSE_UPDATE_REQUEST))
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 
 	@Test
-	@DisplayName("Atualizar receita por válido")
+	@DisplayName("Atualizar receita por INválido")
 	public void update_WhenRevenueIdNotExists_ExpectedException() throws Exception {
 
 		when(this.expenseSerive.update(anyLong(), any())).thenReturn(ExpenseScenarioFactory.EXPENSE_RESPONSE);
 
-		this.mockMvc.perform(put("/despesas/1").content(asJsonString(ExpenseScenarioFactory.EXPENSE_REQUEST))
+		this.mockMvc.perform(put("/despesas/10").content(asJsonString(ExpenseScenarioFactory.EXPENSE_UPDATE_REQUEST))
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 

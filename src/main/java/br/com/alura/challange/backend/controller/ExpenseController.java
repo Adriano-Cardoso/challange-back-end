@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.challange.backend.domain.dto.request.ExpenseRequest;
+import br.com.alura.challange.backend.domain.dto.request.ExpenseUpdateRequest;
 import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.service.ExpenseService;
 import io.swagger.annotations.Api;
@@ -66,8 +67,8 @@ public class ExpenseController {
 	@ApiOperation(value = "Atualização de despesas por id")
 	@PutMapping("/{id}")
 	public ResponseEntity<ExpenseResponse> update(@PathVariable("id") Long id,
-			@RequestBody ExpenseRequest expenseRequest) {
-		return ResponseEntity.status(HttpStatus.OK).body(this.expenseService.update(id, expenseRequest));
+			@RequestBody ExpenseUpdateRequest expenseUpdateRequest) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.expenseService.update(id, expenseUpdateRequest));
 	}
 	
 	@ApiOperation(value = "Exclusão de despesas por id")

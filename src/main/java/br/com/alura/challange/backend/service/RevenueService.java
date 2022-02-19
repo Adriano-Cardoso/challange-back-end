@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 
 import br.com.alura.challange.backend.domain.Revenue;
 import br.com.alura.challange.backend.domain.dto.request.RevenueRequest;
+import br.com.alura.challange.backend.domain.dto.request.RevenueUpdateRequest;
 import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
 import br.com.alura.challange.backend.repository.RevenueRepository;
 import br.com.alura.challange.backend.validations.Message;
@@ -28,8 +29,8 @@ public class RevenueService {
 	@Validated
 	public RevenueResponse createRevenue(@Valid RevenueRequest revenueRequest) {
 
-		this.revenueRepository.findByValueAndDate(revenueRequest.getDescription(),
-				revenueRequest.getValue(), revenueRequest.getDate()).ifPresent(d -> {
+		this.revenueRepository.findByValueAndDate(revenueRequest.getDescription(), revenueRequest.getValue(),
+				revenueRequest.getDate()).ifPresent(d -> {
 					throw Message.DESCRIPTION_EXISTS.asBusinessException();
 
 				});
@@ -57,17 +58,17 @@ public class RevenueService {
 
 	@Validated
 	@Transactional
-	public RevenueResponse updateRevenue(Long id, @Valid RevenueRequest revenueRequest) {
+	public RevenueResponse updateRevenue(Long id, @Valid RevenueUpdateRequest revenueUpdateRequest) {
 		Revenue revenue = this.revenueRepository.findById(id)
 				.orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
 
-		this.revenueRepository.findByValueAndDate(revenueRequest.getDescription(),
-				revenueRequest.getValue(), revenueRequest.getDate()).ifPresent(d -> {
+		this.revenueRepository.findByValueAndDate(revenueUpdateRequest.getDescription(),
+				revenueUpdateRequest.getValue(), revenueUpdateRequest.getDate()).ifPresent(d -> {
 					throw Message.DESCRIPTION_EXISTS.asBusinessException();
 
 				});
 
-		revenue.update(revenueRequest);
+		revenue.update(revenueUpdateRequest);
 
 		log.info("method=updateRevenue id={} description={} value={} date={}", revenue.getId(),
 				revenue.getDescription(), revenue.getValue(), revenue.getDate());
@@ -79,11 +80,11 @@ public class RevenueService {
 	public Page<RevenueResponse> listByRevenueYearAndMonth(int page, int limit, Integer year, Integer month) {
 
 		log.info("method=listByRevenueMonth");
-		
+
 		Pageable pageable = PageRequest.of(page, limit);
-		
+
 		log.info("method=findByDateAndYear limit{}", limit);
-		
+
 		return this.revenueRepository.listByRevenueYearAndMonth(pageable, year, month);
 
 	}
