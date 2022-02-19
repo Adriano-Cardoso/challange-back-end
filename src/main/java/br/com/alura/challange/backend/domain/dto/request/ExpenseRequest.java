@@ -39,6 +39,7 @@ public class ExpenseRequest {
 	
 	@ApiModelProperty(position = 3, required = false, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
 	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonIgnore
 	private LocalDate date;
 	
 	@ApiModelProperty(position = 3, value = "categoryEnum", name = "categoryEnum", dataType = "CategoryEnum", example = "ALIMENTACAO")

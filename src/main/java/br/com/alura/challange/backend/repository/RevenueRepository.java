@@ -30,8 +30,8 @@ public interface RevenueRepository extends JpaRepository<Revenue, Long> {
 			+ "From Revenue r WHERE (: year is null or YEAR(date)=:year)  AND (: month is null or MONTH(date)=:month)")
 	Page<RevenueResponse> listByRevenueYearAndMonth(Pageable pageable, @Param("year") Integer year, @Param("month") Integer month);
 	
-	@Query("select sum(d.value) from Revenue d where YEAR(d.date) = :ano and MONTH(d.date) = :mes")
-    Optional<BigDecimal> sumMoth(Integer ano, Integer mes);
+	@Query("select sum(d.value) from Revenue d where YEAR(d.date) = :year and MONTH(d.date) = :month")
+    Optional<BigDecimal> sumMoth(Integer year, Integer month);
 	
 
 }

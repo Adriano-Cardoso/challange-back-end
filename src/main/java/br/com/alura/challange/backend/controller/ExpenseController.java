@@ -18,6 +18,7 @@ import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.service.ExpenseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 
 @Api(value = "Despesas Endpoint", description = "Endpoints da despesa", tags = { "Despesa Endpoint" })
@@ -46,12 +47,12 @@ public class ExpenseController {
 	}
 	
 	@ApiOperation(value = "Listar despesas por ano e mes")
-	@GetMapping("{year}/{month}")
+	@GetMapping("/year/{year}/month/{month}")
 	public ResponseEntity<Page<ExpenseResponse>> listByExpenseYearAndMonth(
 			@RequestParam(required = false, defaultValue = "0", name = "page") int page,
 			@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
-			@RequestParam(required = false, name = "year") Integer year,
-			@RequestParam(required = false, name = "month") Integer month) {
+			@ApiParam(required = false, name = "year") @PathVariable("year") Integer year,
+			@ApiParam(required = false, name = "month")@PathVariable("month") Integer month) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.expenseService.listByExpenseYearAndMonth(page, limit, year, month));
 	}
 
