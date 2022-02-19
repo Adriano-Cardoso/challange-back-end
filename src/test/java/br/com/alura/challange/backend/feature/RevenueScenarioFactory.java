@@ -10,8 +10,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import br.com.alura.challange.backend.domain.Revenue;
+import br.com.alura.challange.backend.domain.dto.request.RevenueRequest;
 import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
-import br.com.alura.challange.backend.domain.request.RevenueRequest;
 
 public class RevenueScenarioFactory {
 
@@ -21,42 +21,54 @@ public class RevenueScenarioFactory {
 	public static final RevenueRequest REVENUE_REQUEST = loadRevenuUpdate();
 	public static final RevenueRequest CREATE = loadCreate();
 	public static final RevenueRequest CREATE_REVENUE = loadCreateRevenue();
+	public static final Page<RevenueResponse> PAGE_REVENUE = loadPageRevenue();
 
 	private static Page<RevenueResponse> loadListAll() {
 
 		PageRequest page = PageRequest.of(0, 10);
 
-		RevenueResponse revenueResponse = new RevenueResponse(1l, "teste", BigDecimal.TEN, LocalDate.now());
+		RevenueResponse revenueResponse = new RevenueResponse(1L, "teste", BigDecimal.TEN, LocalDate.now());
 
 		List<RevenueResponse> list = new ArrayList<>();
 
 		list.add(revenueResponse);
 
-		return new PageImpl<>(list, page, 5);
+		return new PageImpl<>(list, page, 10);
+	}
+
+	private static Page<RevenueResponse> loadPageRevenue() {
+		PageRequest page = PageRequest.of(0, 10);
+
+		RevenueResponse revenueResponse = new RevenueResponse(1L, "teste", BigDecimal.TEN, LocalDate.now());
+
+		List<RevenueResponse> list = new ArrayList<>();
+
+		list.add(revenueResponse);
+
+		return new PageImpl<>(list, page, 10);
 	}
 
 	private static RevenueRequest loadCreateRevenue() {
-		return RevenueRequest.builder().description("receita 01").value(BigDecimal.TEN).date(LocalDate.of(2022, 01, 25))
-				.build();
-	}
-
-	private static RevenueRequest loadCreate() {
 		return RevenueRequest.builder().description("receita 01").value(BigDecimal.TEN).date(LocalDate.now()).build();
 	}
 
-	private static RevenueRequest loadRevenuUpdate() {
-		return RevenueRequest.builder().description("Despesas teste").value(BigDecimal.TEN).date(LocalDate.now())
-				.build();
+	private static RevenueRequest loadCreate() {
+		RevenueRequest revenueRequest = new RevenueRequest("teste", BigDecimal.ONE, LocalDate.now());
+		return revenueRequest;
 	}
 
 	private static RevenueResponse loadRevenueResponse() {
-		return RevenueResponse.builder().id(1L).description("Salario").value(BigDecimal.TEN)
-				.date(LocalDate.of(2021, 10, 17)).build();
+		RevenueResponse revenueResponse = new RevenueResponse(1L, "teste 01", BigDecimal.TEN, LocalDate.now());
+		return revenueResponse;
+	}
+
+	private static RevenueRequest loadRevenuUpdate() {
+		return RevenueRequest.builder().description("testes").value(BigDecimal.ZERO).date(LocalDate.now()).build();
 	}
 
 	private static Revenue loadRevenue() {
-		return Revenue.builder().id(1L).description("Salario").value(BigDecimal.TEN).date(LocalDate.of(2021, 10, 17))
-				.build();
+		return Revenue.builder().id(1L).description("Salario").value(BigDecimal.TEN).date(LocalDate.now()).build();
 	}
+
 
 }

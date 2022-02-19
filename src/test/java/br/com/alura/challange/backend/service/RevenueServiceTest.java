@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,15 +38,16 @@ public class RevenueServiceTest {
 	@DisplayName("Listar todas receitas")
 	void listAllRevenue_WhenListValid_ExpectedOk() {
 
-		when(this.revenueRepository.listAllRevenue(any(Pageable.class))).thenReturn(RevenueScenarioFactory.LIST_ALL);
+		when(this.revenueRepository.listAllRevenue(anyString(), any(Pageable.class)))
+				.thenReturn(RevenueScenarioFactory.LIST_ALL);
 
-		Page<RevenueResponse> listAllRevenue = this.revenueService.listAllRevenue();
+		Page<RevenueResponse> listAllRevenue = this.revenueService.listAllRevenue(0, 10, "te");
 
 		assertNotNull(listAllRevenue);
 
 		assertEquals(RevenueScenarioFactory.LIST_ALL, listAllRevenue);
 
-		verify(revenueRepository).listAllRevenue(any());
+		verify(revenueRepository).listAllRevenue(any(), any());
 	}
 
 	@Test
@@ -107,7 +109,7 @@ public class RevenueServiceTest {
 	@Test
 	@DisplayName("Atualizar receita, com validação de id e inválido")
 	void updateRevenue_WheIdIsInvalid_ExpectedOk() {
-		
+
 		when(this.revenueRepository.findById(anyLong())).thenReturn(Optional.empty());
 
 		assertThrows(BusinessException.class,
@@ -117,33 +119,37 @@ public class RevenueServiceTest {
 	@Test
 	@DisplayName("Atualizar receita, com validação descrição e data e inválido")
 	void updateRevenue_WhenValidationDescripionDateInValid_ExpectdException() {
-		
+
 		when(this.revenueRepository.findById(any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE));
 
-		when(this.revenueRepository.findByValueAndDate(any(), any(), any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
-		
-		assertThrows(BusinessException.class, () -> revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_REQUEST));
+		when(this.revenueRepository.findByValueAndDate(any(), any(), any()))
+				.thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
+
+		assertThrows(BusinessException.class,
+				() -> revenueService.updateRevenue(1L, RevenueScenarioFactory.REVENUE_REQUEST));
 	}
-	
+
 	@Test
 	@DisplayName("Criar receita, com validação descrição e data e válida")
 	void createRevenue_WhenValidationDescripitionAndDateIsValid_ExpectedOk() {
-		
+
 		when(this.revenueRepository.findByValueAndDate(any(), any(), any())).thenReturn(Optional.empty());
-		
+
 		RevenueResponse revenueResponse = this.revenueService.createRevenue(RevenueScenarioFactory.CREATE);
-		
+
 		assertNotNull(revenueResponse);
-		
+
 	}
-	
+
 	@Test
 	@DisplayName("Criar receita, com validação descrição e data e inválido")
 	void createRevenue_WhenValidationDescripitionAndDateIsInValid_ExpectedException() {
-		when(this.revenueRepository.findByValueAndDate(any(), any(), any())).thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
-		
-		assertThrows(BusinessException.class, ()-> this.revenueService.createRevenue(RevenueScenarioFactory.REVENUE_REQUEST));
-		
+		when(this.revenueRepository.findByValueAndDate(any(), any(), any()))
+				.thenReturn(Optional.of(RevenueScenarioFactory.REVENUE_RESPONSE));
+
+		assertThrows(BusinessException.class,
+				() -> this.revenueService.createRevenue(RevenueScenarioFactory.REVENUE_REQUEST));
+
 	}
 
 }

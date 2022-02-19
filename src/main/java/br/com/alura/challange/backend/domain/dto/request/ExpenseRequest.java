@@ -9,6 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import br.com.alura.challange.backend.domain.enums.CategoryEnum;
 import io.swagger.annotations.ApiModelProperty;
@@ -36,6 +38,7 @@ public class ExpenseRequest {
 	private BigDecimal value;
 	
 	@ApiModelProperty(position = 3, required = false, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
+	@JsonSerialize(using = ToStringSerializer.class)
 	private LocalDate date;
 	
 	@ApiModelProperty(position = 3, value = "categoryEnum", name = "categoryEnum", dataType = "CategoryEnum", example = "ALIMENTACAO")

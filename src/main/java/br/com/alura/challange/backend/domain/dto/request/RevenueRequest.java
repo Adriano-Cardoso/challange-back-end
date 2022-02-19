@@ -9,6 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -36,6 +38,7 @@ public class RevenueRequest {
 
 	
 	@ApiModelProperty(position = 3, value = "Data", name = "date", dataType = "LocalDate", example = "2022-01-25")
+	@JsonSerialize(using = ToStringSerializer.class) 
 	private LocalDate date;
 
 	@JsonIgnore
