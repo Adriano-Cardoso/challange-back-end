@@ -10,16 +10,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.alura.challange.backend.domain.request.RevenueRequest;
-import br.com.alura.challange.backend.domain.response.RevenueResponse;
+import br.com.alura.challange.backend.domain.dto.request.RevenueRequest;
+import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
 import br.com.alura.challange.backend.service.RevenueService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 
-@Api(value = "Receita Endpoint", description = "Receita da despesa", tags = { "Receita Endpoint" })
+@Api(value = "Receita Endpoint", description = "Receita", tags = { "Receita Endpoint" })
 @RestController
 @AllArgsConstructor
 @RequestMapping("/receitas")
@@ -36,8 +38,11 @@ public class RevenueController {
 
 	@ApiOperation(value = "Listagem de receitas")
 	@GetMapping
-	public ResponseEntity<Page<RevenueResponse>> listAllRevenue() {
-		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.listAllRevenue());
+	public ResponseEntity<Page<RevenueResponse>> listAllRevenue(
+			@RequestParam(required = false, defaultValue = "0", name = "page") int page,
+			@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
+			@RequestParam(required = false, name = "description") String description) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.listAllRevenue(page, limit, description));
 	}
 
 	@ApiOperation(value = "Detalhamento de receita")
@@ -51,6 +56,16 @@ public class RevenueController {
 	public ResponseEntity<RevenueResponse> updateRevenue(@PathVariable("id") Long id,
 			@RequestBody RevenueRequest revenueRequest) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.updateRevenue(id, revenueRequest));
+	}
+
+	@ApiOperation(value = "Listar receitas por ano e mes")
+	@GetMapping("/{year}/{month}")
+	public ResponseEntity<Page<RevenueResponse>> listByRevenueMonth(
+			@RequestParam(required = false, defaultValue = "0", name = "page") int page,
+			@RequestParam(required = false, defaultValue = "10", name = "limit") int limit,
+			@ApiParam(required = false, name = "year") @PathVariable("year") Integer year,
+			@ApiParam(required = false, name = "month")@PathVariable("month") Integer month) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.revenueService.listByRevenueYearAndMonth(page, limit, year, month));
 	}
 
 	@ApiOperation(value = "Exclusão de receita por id")

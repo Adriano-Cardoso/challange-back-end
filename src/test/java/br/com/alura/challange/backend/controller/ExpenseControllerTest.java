@@ -40,17 +40,6 @@ public class ExpenseControllerTest {
 	private MockMvc mockMvc;
 
 	@Test
-	@DisplayName("Listar todos as despesas")
-	public void listAllExpense_WhenListIsValid_ExpectedOk() throws Exception {
-
-		when(this.expenseSerive.listAllExpense()).thenReturn(ExpenseScenarioFactory.LIST_ALL);
-
-		this.mockMvc.perform(get("/despesas")).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
-	}
-
-	
-	@Test
 	@DisplayName("Buscar despesas por id válido")
 	public void listById_WhenListIdIsValid_ExpectedOk() throws Exception {
 
@@ -61,7 +50,6 @@ public class ExpenseControllerTest {
 
 	}
 
-	
 	@Test
 	@DisplayName("Buscar despesas por id inválido")
 	public void listById_WhenListIdIsInValid_ExpectedException() throws Exception {
@@ -73,7 +61,6 @@ public class ExpenseControllerTest {
 
 	}
 
-	
 	@Test
 	@DisplayName("Atualizar despesas por id válido")
 	public void update_WhenRevenueExists_ExpectedOk() throws Exception {
@@ -84,38 +71,36 @@ public class ExpenseControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 
-	
 	@Test
-	@DisplayName("Atualizar receita por id inválido")
+	@DisplayName("Atualizar receita por válido")
 	public void update_WhenRevenueIdNotExists_ExpectedException() throws Exception {
 
 		when(this.expenseSerive.update(anyLong(), any())).thenReturn(ExpenseScenarioFactory.EXPENSE_RESPONSE);
 
-		this.mockMvc.perform(put("/receitas/10").content(asJsonString(ExpenseScenarioFactory.EXPENSE_REQUEST))
+		this.mockMvc.perform(put("/despesas/1").content(asJsonString(ExpenseScenarioFactory.EXPENSE_REQUEST))
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
-	
-	
+
 	@Test
 	@DisplayName("Criar uma nova despesa")
 	public void createExpense_WhenRevenueValidationNotExistisMonth_ExpectedOk() throws Exception {
-		
+
 		when(this.expenseSerive.createExpense(any())).thenReturn(ExpenseScenarioFactory.EXPENSE_RESPONSE);
-		
-		this.mockMvc.perform(post("/receitas").content(asJsonString(ExpenseScenarioFactory.CREATE))
-				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+
+		this.mockMvc.perform(post("/despesas").content(asJsonString(ExpenseScenarioFactory.CREATE))
+				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
 	}
-	
+
 	@Test
 	@DisplayName("Deleta receita por id")
 	public void delete_WhenRevenueIdIsInvalid_ExpectedOk() throws Exception {
-		
+
 		doNothing().when(expenseSerive).delete(4L);
 
-		mockMvc.perform(delete("/receitas/4").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
-		
+		mockMvc.perform(delete("/receitas/1").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNoContent());
+
 	}
-	
 
 	public static String asJsonString(final Object obj) {
 		try {

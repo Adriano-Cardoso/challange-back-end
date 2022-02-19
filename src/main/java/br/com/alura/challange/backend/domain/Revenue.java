@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.alura.challange.backend.domain.request.RevenueRequest;
-import br.com.alura.challange.backend.domain.response.RevenueResponse;
+import br.com.alura.challange.backend.domain.dto.request.RevenueRequest;
+import br.com.alura.challange.backend.domain.dto.response.RevenueResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +43,7 @@ public class Revenue {
 
 	@Column(name = "data", nullable = false)
 	@JsonFormat(pattern = "dd/mm/yyyy")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate date;
 	
 	@PrePersist

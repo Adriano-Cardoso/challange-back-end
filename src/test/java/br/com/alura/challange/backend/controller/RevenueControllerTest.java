@@ -1,6 +1,7 @@
 package br.com.alura.challange.backend.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -43,13 +44,23 @@ public class RevenueControllerTest {
 	@DisplayName("Listar todos os receitas")
 	public void listAllRevenue_WhenListIsValid_ExpectedOk() throws Exception {
 
-		when(this.revenueService.listAllRevenue()).thenReturn(RevenueScenarioFactory.LIST_ALL);
+		when(this.revenueService.listAllRevenue(anyInt(), anyInt(), any())).thenReturn(RevenueScenarioFactory.LIST_ALL);
 
 		this.mockMvc.perform(get("/receitas")).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	}
 
-	
+	@Test
+	@DisplayName("Listar receitas por mes e ano")
+	public void listByRevenue_WhenListIsValid_ExpectedOk() throws Exception {
+
+		when(this.revenueService.listByRevenueYearAndMonth(anyInt(), anyInt(), anyInt(), anyInt()))
+				.thenReturn(RevenueScenarioFactory.PAGE_REVENUE);
+
+		this.mockMvc.perform(get("/receitas/2/2022")).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+	}
+
 	@Test
 	@DisplayName("Buscar receita por id válido")
 	public void listByIdRevenue_WhenListIdIsValid_ExpectedOk() throws Exception {
@@ -61,7 +72,6 @@ public class RevenueControllerTest {
 
 	}
 
-	
 	@Test
 	@DisplayName("Buscar receita por id inválido")
 	public void listByIdRevenue_WhenListIdIsInValid_ExpectedException() throws Exception {
@@ -73,7 +83,6 @@ public class RevenueControllerTest {
 
 	}
 
-	
 	@Test
 	@DisplayName("Atualizar receita por id válido")
 	public void update_WhenRevenueExists_ExpectedOk() throws Exception {
@@ -84,38 +93,36 @@ public class RevenueControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 
-	
 	@Test
 	@DisplayName("Atualizar receita por id inválido")
 	public void update_WhenRevenueIdNotExists_ExpectedException() throws Exception {
 
 		when(this.revenueService.updateRevenue(anyLong(), any())).thenReturn(RevenueScenarioFactory.REVENUE_RESPONSE);
 
-		this.mockMvc.perform(put("/receitas/10").content(asJsonString(RevenueScenarioFactory.REVENUE_REQUEST))
+		this.mockMvc.perform(put("/receitas/1").content(asJsonString(RevenueScenarioFactory.REVENUE_REQUEST))
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
-	
-	
+
 	@Test
 	@DisplayName("Criar uma nova receita")
 	public void createRevenue_WhenRevenueValidationNotExistisMonth_ExpectedOk() throws Exception {
-		
+
 		when(this.revenueService.createRevenue(any())).thenReturn(RevenueScenarioFactory.REVENUE_RESPONSE);
-		
-		this.mockMvc.perform(post("/receitas").content(asJsonString(RevenueScenarioFactory.CREATE_REVENUE))
-				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		this.mockMvc.perform(post("/receitas").content(asJsonString(RevenueScenarioFactory.CREATE))
+				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
+
 	}
-	
+
 	@Test
 	@DisplayName("Deleta receita por id")
 	public void delete_WhenRevenueIdIsInvalid_ExpectedOk() throws Exception {
-		
+
 		doNothing().when(revenueService).delete(4L);
 
-		mockMvc.perform(delete("/receitas/4").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
-		
+		mockMvc.perform(delete("/receitas/4").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNoContent());
+
 	}
-	
 
 	public static String asJsonString(final Object obj) {
 		try {

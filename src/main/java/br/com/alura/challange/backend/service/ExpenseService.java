@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import br.com.alura.challange.backend.domain.Expense;
-import br.com.alura.challange.backend.domain.request.ExpenseRequest;
-import br.com.alura.challange.backend.domain.response.ExpenseResponse;
+import br.com.alura.challange.backend.domain.dto.request.ExpenseRequest;
+import br.com.alura.challange.backend.domain.dto.response.ExpenseResponse;
 import br.com.alura.challange.backend.repository.ExpenseRepository;
 import br.com.alura.challange.backend.validations.Message;
 import lombok.AllArgsConstructor;
@@ -25,35 +25,39 @@ public class ExpenseService {
 
 	private ExpenseRepository expenseRepository;
 
+
 	@Validated
 	public ExpenseResponse createExpense(@Valid ExpenseRequest expenseRequest) {
 
-		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(), expenseRequest.getCurrentDate())
-				.ifPresent(d -> {
+//		this.expenseRepository.findByCategoryEnum(expenseRequest.getCategoryEnum()).ifPresent(e -> {
+//			throw Message.CATEGORY_NOT_FOUND.asBusinessException();
+//		});
+
+		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(),
+				expenseRequest.getCurrentDate()).ifPresent(d -> {
 					throw Message.DESCRIPTION_EXISTS_EXPENSE.asBusinessException();
 
 				});
 
 		Expense expense = Expense.of(expenseRequest);
 
+
 		this.expenseRepository.save(expense);
 
-		log.info("method=createRevenue Id={} description={} value={} date={}", expense.getId(),
+		log.info("method=createExpense Id={} description={} value={} date={}", expense.getId(),
 				expense.getDescription(), expense.getValue(), expense.getDate());
 
 		return expense.toResponse();
 	}
 
-	public Page<ExpenseResponse> listAllExpense() {
-		int limit = 5;
-		int page = 0;
+	public Page<ExpenseResponse> listAllExpense(int page, int limit, String description) {
 
 		log.info("method=listAllExpense");
 
 		Pageable pageable = PageRequest.of(page, limit);
 
-		log.info("method=findAllVideoFree limit{}", limit);
-		return this.expenseRepository.listAllExpense(pageable);
+		log.info("method=listAllExpense limit{}", limit);
+		return this.expenseRepository.listAllExpense(pageable, description);
 	}
 
 	public ExpenseResponse findById(Long id) {
@@ -64,6 +68,7 @@ public class ExpenseService {
 
 		return expense.toResponse();
 	}
+	
 
 	@Validated
 	@Transactional
@@ -71,9 +76,8 @@ public class ExpenseService {
 		Expense expense = this.expenseRepository.findById(id)
 				.orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
 
-		
-		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(), expenseRequest.getCurrentDate())
-				.ifPresent(d -> {
+		this.expenseRepository.findByDescriptionAndValue(expenseRequest.getDescription(), expenseRequest.getValue(),
+				expenseRequest.getCurrentDate()).ifPresent(d -> {
 					throw Message.DESCRIPTION_EXISTS_EXPENSE.asBusinessException();
 
 				});
@@ -82,14 +86,28 @@ public class ExpenseService {
 
 		return expense.toResponse();
 	}
-	
+
 	public void delete(Long id) {
-		Expense expense = this.expenseRepository.findById(id).orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
-		
+		Expense expense = this.expenseRepository.findById(id)
+				.orElseThrow(() -> Message.NOT_FOUND_ID.asBusinessException());
+
 		log.info("method=delete id={}", id);
-		
+
 		this.expenseRepository.delete(expense);
-		
+
 	}
+	
+	public Page<ExpenseResponse> listByExpenseYearAndMonth(int page, int limit, Integer year, Integer month) {
+
+		log.info("method=listByRevenueMonth");
+		
+		Pageable pageable = PageRequest.of(page, limit);
+		
+		log.info("method=findByDateAndYear limit{}", limit);
+		
+		return this.expenseRepository.listByExpenseYearAndMonth(pageable, year, month);
+
+	}
+
 
 }
