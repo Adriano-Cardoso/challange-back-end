@@ -17,8 +17,9 @@ Trello da Sprint 3: https://trello.com/b/1CcOHZYQ/challenge-bankend-3
 #Tecnologias
 
 -Java 11
+
 -Spring boot
+
 -Spring Security
+
 -h2-console
--heroku
-# challange-back-end
